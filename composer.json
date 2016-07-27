@@ -1,6 +1,6 @@
 {
     "name": "itf/twig-mailer-bundle",
-    "description": "Sends twig based mails stored in database",
+    "description": "Sends twig based mails stored in database ",
     "type": "library",
     "require": {
         "symfony/symfony": "2.7.*",
