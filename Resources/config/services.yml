@@ -1,0 +1,4 @@
+services:
+    itf.twig_mailer:
+        class: ITF\TwigMailerBundle\Mailer\Mailer
+        arguments: [ '@service_container' ]

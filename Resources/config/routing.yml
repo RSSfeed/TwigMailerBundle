@@ -1,0 +1,3 @@
+itf_twig_mailer_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: ITFTwigMailerBundle:Default:index }
