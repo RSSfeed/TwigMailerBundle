@@ -22,7 +22,7 @@ class Mailer
     public function __construct(ContainerInterface $container)
     {
         $this->container    = $container;
-        $config             = $container->getParameter('itf_twigmailer');
+        $config             = $container->getParameter('itf_twig_mailer');
         $this->sender_mail  = $config['sender_mail'];
         $this->mail_layout  = $config['layout'];
     }

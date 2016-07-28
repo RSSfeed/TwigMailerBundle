@@ -24,6 +24,6 @@ class ITFTwigMailerExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
-        $container->setParameter('itf_twigmailer', $config);
+        $container->setParameter('itf_twig_mailer', $config);
     }
 }
