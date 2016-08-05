@@ -1,8 +1,8 @@
 <?php
 namespace ITF\TwigMailerBundle\Mailer;
 
-use ITF\TwigMailerBundle\Entity\Mail;
-use ITF\TwigMailerBundle\Entity\MailTemplate;
+use AppBundle\Entity\Mail;
+use AppBundle\Entity\MailTemplate;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class Mailer
@@ -27,8 +27,13 @@ class Mailer
         $this->mail_layout  = $config['layout'];
     }
     
-    public function send(Mail $mail, $email = NULL)
+    public function send(Mail $mail = NULL, $email = NULL)
     {
+        if ($mail === NULL && $email === NULL) {
+            throw new \Exception("mail and email cannot be both empty");
+        }
+        if ($mail === NULL) $mail = new Mail();
+        
         $em = $this->container->get('doctrine')->getManager();
         
         // if template and id not set
@@ -36,7 +41,7 @@ class Mailer
             throw new \Exception("you have to set a mail template");
         } elseif ($mail->getMailTemplate() === NULL && $this->getMailTemplateId() !== NULL) {
             // set mail template
-            $mailTemplate = $em->getRepository('ITFTwigMailerBundle:MailTemplate')->findOneBy(array(
+            $mailTemplate = $em->getRepository(get_class(new MailTemplate()))->findOneBy(array(
                 'identifier' => $this->getMailTemplateId()
             ));
             
@@ -74,6 +79,12 @@ class Mailer
         $twigTemplateMessage = $twig->createTemplate($mailTemplate->getMessage());
         $htmlOnlyMessage = $twigTemplateMessage->render($mail->getParams());
         
+        // if comma-separated list of recipients
+        if (preg_match('/\,/', $sendingAddress)) {
+            $sendingAddress = explode(',', $sendingAddress);
+            $sendingAddress = str_replace(' ', '', $sendingAddress);
+        }
+        
         // prepare swiftmail
         $swiftMail = new \Swift_Message();
         $swiftMail
@@ -87,6 +98,7 @@ class Mailer
         $swiftMailer->send($swiftMail);
         
         // save sent
+        $mail->setEmailAddress(is_array($sendingAddress) ? implode(', ', $sendingAddress) : $sendingAddress);
         $mail->setSentAt(new \DateTime('now'));
         $mail->setContent($htmlOnlyMessage);
         $em->persist($mail);
@@ -106,7 +118,7 @@ class Mailer
      */
     public function getMailTemplates()
     {
-        return $this->container->get('doctrine')->getManager()->getRepository('ITFTwigMailerBundle:MailTemplate')->findAll();
+        return $this->container->get('doctrine')->getManager()->getRepository(get_class(new MailTemplate()))->findAll();
     }
     
     /**
