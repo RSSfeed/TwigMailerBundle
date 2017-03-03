@@ -13,10 +13,10 @@
             "email": "info@interface-f.com"
         }
     ],
-    "target-dir": "ITFTwigMailerBundle",
+    "target-dir": "ITF/TwigMailerBundle",
     "autoload": {
         "psr-0": {
-            "ITFTwigMailerBundle": ""
+            "ITF\\TwigMailerBundle": ""
         }
     }
 }
