@@ -1,0 +1,22 @@
+{
+    "name": "itf/twig-mailer",
+    "description": "Send twig based mails stored in database",
+    "type": "library",
+    "require": {
+        "php": ">=5.3",
+        "symfony/symfony": "^2.7"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dennis Senn",
+            "email": "info@interface-f.com"
+        }
+    ],
+    "target-dir": "ITFTwigMailerBundle",
+    "autoload": {
+        "psr-0": {
+            "ITFTwigMailerBundle": ""
+        }
+    }
+}
