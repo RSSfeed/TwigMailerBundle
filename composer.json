@@ -1,5 +1,5 @@
 {
-    "name": "itf/twig-mailer",
+    "name": "itf/twig-mailer-bundle",
     "description": "Send twig based mails stored in database",
     "type": "library",
     "require": {
