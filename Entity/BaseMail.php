@@ -149,7 +149,7 @@ abstract class BaseMail implements MailInterface
      * @param MailTemplateInterface $mailTemplate
      * @return self
      */
-    public function setMailTemplate(MailTemplateInterface $mailTemplate)
+    public function setMailTemplate(MailTemplateInterface $mailTemplate = NULL)
     {
         $this->mailTemplate = $mailTemplate;
         
@@ -177,7 +177,9 @@ abstract class BaseMail implements MailInterface
             $params = array();
         }
         
-        $params['user'] = $this->getUser();
+        if (!isset($params['user'])) {
+            $params['user'] = $this->getUser();
+        }
         
         return $params;
     }
